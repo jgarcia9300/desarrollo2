@@ -1,0 +1,10 @@
+{
+  "tipo": "circular",
+  "titulo": "Test Chart G2QtA",
+  "datos": [
+    {
+      "leyenda": "Leyenda KBexz",
+      "valor": "85"
+    }
+  ]
+}
