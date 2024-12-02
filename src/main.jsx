@@ -4,13 +4,11 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Graficas from './GenerarGraficas/Graficas.jsx';
 
-
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Graficas />,
   },
-
 ]);
 
 createRoot(document.getElementById('root')).render(
