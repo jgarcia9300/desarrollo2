@@ -163,3 +163,4 @@ const Graficas = () => {
 };
 
 export default Graficas;
+
