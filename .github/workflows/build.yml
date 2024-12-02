@@ -29,7 +29,8 @@ jobs:
 
       - name: Upload Jest coverage to SonarCloud
         uses: SonarSource/sonarcloud-github-action@v1
-        
+        with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         env:
           SONAR_HOST_URL: https://sonarcloud.io
           SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }} # Cambia con tu clave de proyecto de SonarCloud
