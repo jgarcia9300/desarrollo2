@@ -1,4 +1,4 @@
-name: Build
+name: Jest Tests with Coverage and SonarCloud
 
 on:
   push:
@@ -9,51 +9,31 @@ on:
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '16'  # Ajusta según tu versión de Node.js
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
+      - name: Run Jest tests with coverage
+        run: npm test -- --coverage  # Ejecuta Jest con la opción de cobertura
 
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
+      - name: Upload Jest coverage to SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v1
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests with coverage
-        run: |
-          npm test -- --coverage
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.projectKey=Esteban93040_desarrollo2
-            -Dsonar.organization=esteban93040
+          SONAR_HOST_URL: https://sonarcloud.io
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }} # Cambia con tu clave de proyecto de SonarCloud
+          SONAR_PROJECT_NAME: ${{ secrets.SONAR_PROJECT_NAME }} # Cambia con el nombre de tu proyecto
+          SONAR_LOGIN: ${{ secrets.SONAR_TOKEN }}  # Usa tu token de SonarCloud desde los Secrets de GitHub
+
