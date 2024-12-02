@@ -1,11 +1,14 @@
 module.exports = {
-  testEnvironment: 'jsdom',
-  moduleFileExtensions: ['js', 'jsx'],
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
   },
+  moduleFileExtensions: ['js', 'jsx'],
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(css|less)$': 'identity-obj-proxy',
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(puppeteer|bootstrap)/)',
+  ],
 };

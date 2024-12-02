@@ -1,0 +1,10 @@
+{
+  "tipo": "circular",
+  "titulo": "Test Chart 85lTZ",
+  "datos": [
+    {
+      "leyenda": "Leyenda PICXE",
+      "valor": "57"
+    }
+  ]
+}
