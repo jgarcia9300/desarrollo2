@@ -1,23 +1,34 @@
-name: Build
+name: Jest Tests with Coverage and SonarCloud
+
 on:
- push:
-   branches:
-     - main
- pull_request:
-   types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          fetch-depth: 0 
+          node-version: '16'  # Ajusta según tu versión de Node.js
+
       - name: Install dependencies
-        run: yarn
-      - name: Test and coverage
-        run: yarn jest --coverage
+        run: npm install
+
+      - name: Run Jest tests with coverage
+        run: npm test -- --coverage  # Ejecuta Jest con la opción de cobertura
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          SONAR_TOKEN: ${{ secrets. SONARCLOUD_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Usa tu token de SonarCloud desde los Secrets de GitHub
+
